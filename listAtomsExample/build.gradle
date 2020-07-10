@@ -1,0 +1,63 @@
+apply plugin: 'java-library'
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+apply plugin: 'org.jetbrains.kotlin.jvm'
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = '1.8'
+        freeCompilerArgs = [
+                '-progressive',
+                '-Xjvm-default=enable',
+        ]
+    }
+}
+
+dependencies {
+    api deps.kotlinStdLib
+    implementation "com.kotmol.kotmolpdbparser:KotmolPdbParser:1.0.0"
+
+    testImplementation deps.jupiter
+
+}
+
+// this solves problems with IDE vs Gradle based testing flows
+// https://stackoverflow.com/a/60269625/3853712
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+
+// credit: MarcinMoskala/KotlinDiscreteMathToolkit
+
+tasks.withType(Test) {
+    testLogging {
+        // set options for log level LIFECYCLE
+        events "passed", "skipped", "failed", "standardOut"
+        showExceptions true
+        exceptionFormat "full"
+        showCauses true
+        showStackTraces true
+
+        // set options for log level DEBUG and INFO
+//        debug {
+//            events "started", "passed", "skipped", "failed", "standardOut", "standardError"
+//            exceptionFormat "full"
+//        }
+        info.events = debug.events
+        info.exceptionFormat = debug.exceptionFormat
+
+        afterSuite { desc, result ->
+            if (!desc.parent) { // will match the outermost suite
+                def output = "Results: ${result.resultType} (${result.testCount} tests, ${result.successfulTestCount} successes, ${result.failedTestCount} failures, ${result.skippedTestCount} skipped)"
+                def startItem = '|  ', endItem = '  |'
+                def repeatLength = startItem.length() + output.length() + endItem.length()
+                println('\n' + ('-' * repeatLength) + '\n' + startItem + output + endItem + '\n' + ('-' * repeatLength))
+            }
+        }
+    }
+}
