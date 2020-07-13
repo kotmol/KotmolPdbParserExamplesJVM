@@ -16,6 +16,7 @@
  *
  */
 
+import com.kotmol.pdbParser.KotmolPdbParserClient
 import com.kotmol.pdbParser.Molecule
 import com.kotmol.pdbParser.ParserPdbFile
 import util.MotmPdbNames
@@ -31,16 +32,20 @@ fun main() {
     val files = MotmPdbNames().pdbNames
 
     val notThereList = mutableListOf<String>()
+    val retainedMessages = mutableListOf<String>()
 
     for (file in files) {
 
         val thisPdbFile = File("../pdbs/$file.pdb")
         val fileExists = thisPdbFile.exists()
         if (fileExists) {
+            retainedMessages.add(String.format("****** file: %s", file))
             val di = DataInputStream(FileInputStream(thisPdbFile))
             val mol = Molecule()
-            val pdbParser = ParserPdbFile(mol)
-            pdbParser.loadPdbFromStream(di)
+            val builder = KotmolPdbParserClient
+                    .Builder()
+                    .setStream(di)
+                    .parse(mol, retainedMessages)
             val numAtoms = mol.atoms.size
             val numBonds = mol.bondList.size
             println("$file has $numAtoms atoms and $numBonds bonds")
@@ -53,6 +58,9 @@ fun main() {
 
     println("Not There List: *********************")
     println(notThereList)
+
+    println("Messages: *********************")
+    println(retainedMessages)
 
     println("done")
 }

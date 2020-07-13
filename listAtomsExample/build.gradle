@@ -17,7 +17,8 @@ compileKotlin {
 
 dependencies {
     api deps.kotlinStdLib
-    implementation "com.kotmol.kotmolpdbparser:KotmolPdbParser:1.0.0"
+//    implementation "com.kotmol.kotmolpdbparser:KotmolPdbParser:1.0.0"
+    implementation "com.kotmol.kotmolpdbparser:kotmolpdbparser:1.0.1-SNAPSHOT"
 
     testImplementation deps.jupiter
 

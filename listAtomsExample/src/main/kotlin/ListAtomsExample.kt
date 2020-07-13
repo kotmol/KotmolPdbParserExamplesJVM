@@ -16,6 +16,7 @@
  *
  */
 
+import com.kotmol.pdbParser.KotmolPdbParserClient
 import com.kotmol.pdbParser.Molecule
 import com.kotmol.pdbParser.ParserPdbFile
 import java.io.*
@@ -30,10 +31,13 @@ fun main() {
 
 
     println("hello")
-    val mol = Molecule()
-    val pdbParser = ParserPdbFile(mol)
 
-    pdbParser.loadPdbFromStream(di)
+    val molecule: Molecule = Molecule()
+    val retainedMessages = mutableListOf<String>()
+    val builder = KotmolPdbParserClient
+            .Builder()
+            .setStream(di)
+            .parse(molecule, retainedMessages)
 
     println("try this next")
 }
