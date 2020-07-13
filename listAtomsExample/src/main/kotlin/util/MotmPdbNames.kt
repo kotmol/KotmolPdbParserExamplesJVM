@@ -37,7 +37,7 @@ class MotmPdbNames {
             "1ajo",
             "1ak4",
             "1akj",
-            "1alm",
+            // "1alm",  obsolete
             "1am1",
             "1am2",
             "1ana",
@@ -710,7 +710,7 @@ class MotmPdbNames {
             "3iyn",
             "3iyq",
             "3iz4",
-            "3iz8",
+            // "3iz8", obsolete - replaced by 4v4l - but the latter mol has only mmCIF
             "3j1t",
             "3j2t",
             "3j2u",

@@ -59,8 +59,16 @@ fun main() {
     println("Not There List: *********************")
     println(notThereList)
 
-    println("Messages: *********************")
-    println(retainedMessages)
+    val outFile = File("../pdbs/0outfileMessages.txt")
+    val writer = outFile.bufferedWriter()
+
+    writer.append("hello there")
+    writer.append("more text\n")
+    for (item in retainedMessages) {
+        writer.append(item)
+        writer.append("\n")
+
+    }
 
     println("done")
 }
