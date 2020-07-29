@@ -69,6 +69,7 @@ fun main() {
         writer.append("\n")
 
     }
+    writer.close()
 
     println("done")
 }
