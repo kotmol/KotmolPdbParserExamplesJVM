@@ -1,6 +1,5 @@
-package util
-
 /*
+ *
  *  Copyright (C) 2020 James Andreas
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,6 +15,8 @@ package util
  *  limitations under the License
  *
  */
+
+package util
 
 class MotmPdbNames {
 

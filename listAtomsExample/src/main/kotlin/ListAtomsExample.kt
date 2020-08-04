@@ -16,7 +16,6 @@
  *
  */
 
-import com.kotmol.pdbParser.KotmolPdbParserClient
 import com.kotmol.pdbParser.Molecule
 import com.kotmol.pdbParser.ParserPdbFile
 import java.io.*
@@ -24,22 +23,21 @@ import java.io.*
 
 fun main() {
 
-
     File("files/testfile.txt").reader().forEachLine { println(it) }
 
-    val di = DataInputStream(FileInputStream("files/1bna.pdb"))
-
+    val stream = DataInputStream(FileInputStream("files/1bna.pdb"))
 
     println("hello")
 
-    val molecule: Molecule = Molecule()
     val retainedMessages = mutableListOf<String>()
-    val builder = KotmolPdbParserClient
-            .Builder()
-            .setStream(di)
-            .parse(molecule, retainedMessages)
+    val molecule: Molecule = Molecule()
+    ParserPdbFile
+            .Builder(molecule)
+            .loadPdbFromStream(stream)
+            .setMessageStrings(retainedMessages)
+            .parse()
 
-    println("try this next")
+    println("Messages are: $retainedMessages")
 }
 
 
