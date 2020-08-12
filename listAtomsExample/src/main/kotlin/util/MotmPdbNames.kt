@@ -20,10 +20,21 @@ package util
 
 class MotmPdbNames {
 
-    val pdbNames = listOf(
+    val pdbNamesShort = listOf(
+
+            "148l",
+            "1a0h",
+            "1a0i")
+
+    val pdbNamesOld = listOf(
+
             "148l",
             "1a0h",
             "1a0i",
+
+            //"1nji",   // big test molecule for longer spin
+            // "1alm", // obsolete, not all that interesting
+
             "1a1t",
             "1a31",
             "1a36",
@@ -54,7 +65,11 @@ class MotmPdbNames {
             "1bbt",
             "1bdg",
             "1bg2",
-            "1bgl",
+            /*
+             * Entry 1BGL was removed from the distribution of released PDB entries
+             * (status Obsolete) on 2014-12-09. It has been replaced (superseded) by 4V40.
+             */
+            // "1bgl",
             "1bgw",
             "1bkd",
             "1bkv",
@@ -85,7 +100,7 @@ class MotmPdbNames {
             "1cjb",
             "1cjw",
             "1ckm",
-            "1ckn",
+            // "1ckn",  The form of the molecule is basically the same as 1ckm
             "1cko",
             "1clq",
             "1cm1",
@@ -650,6 +665,7 @@ class MotmPdbNames {
             "2z7x",
             "2zta",
             "2zyv",
+
             "309d",
             "3a3y",
             "3ado",
@@ -724,7 +740,12 @@ class MotmPdbNames {
             "3kud",
             "3kyh",
             "3l1e",
-            "3l5q",
+            /*
+         * Entry 3L5Q was removed from the distribution of released PDB entries
+         * (status Obsolete) on 2014-12-09.  It has been replaced
+         * (superseded) by 4V7O.
+         */
+            // "3l5q", obsolete
             "3lcb",
             "3ldh",
             "3loh",
@@ -761,7 +782,12 @@ class MotmPdbNames {
             "3tt1",
             "3tt3",
             "3twy",
-            "3u5d",
+            /*
+         * Entry 3U5D was removed from the distribution of released
+         * PDB entries (status Obsolete) on 2014-12-09.  It has been replaced
+         * (superseded) by 4V88.
+         */
+            // "3u5d",  obsolete
             "3u5e",
             "3ugm",
             "3unf",
@@ -783,7 +809,7 @@ class MotmPdbNames {
             "4cc8",
             "4cms",
             "4cox",
-            "4CR2",
+            "4cr2",
             "4dpv",
             "4eeu",
             "4egg",
@@ -970,7 +996,11 @@ class MotmPdbNames {
             "4yb9",
             "4ybq",
             "4zqk",
-            "4zwc",
+            "4zwc"
+
+    )
+
+    val pdbNames = listOf(
             "5a22",
             "5a9q",
             "5ara",

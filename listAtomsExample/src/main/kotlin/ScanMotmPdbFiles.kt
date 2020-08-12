@@ -22,14 +22,31 @@ import com.kotmol.pdbParser.ParserPdbFile
 import util.MotmPdbNames
 import java.io.*
 
+const val RELATIVE_PATH = "../pdbs"
 
 /**
- * for every file in the util/ pdb list, read in the file (from the $Root/files directory)
- * via the pdb parser.
+ * This main() routine loops through a list of PDB files
+ * and parses them with the kotmolpdbparser library.
+ * It prints out a couple of basic statistics for each PDB file.
+ *
+ * At the end of the loop it writes the name of the PDB file
+ * and then any messages logged by the library, if any.
+ *
+ * SETUP:
+ *    See the script in $ROOT/docs/downloadPdbFiles
+ *    You will need to download the PDB files using the script
+ *    in the folder.  The RELATIVE_PATH (see above) gives the
+ *    path to where you put the files.
+ *
+ *    The various examples will cycle through the PDBs as based on the
+ *    MotmPdbNames().pdbNamesShort list
+ *    defined in the util/MotmPdbNames.kt file.
+ *
  */
 fun main() {
 
-    val files = MotmPdbNames().pdbNames
+//    val files = MotmPdbNames().pdbNames
+    val files = MotmPdbNames().pdbNamesShort
 
     val notThereList = mutableListOf<String>()
     val retainedMessages = mutableListOf<String>()
@@ -47,7 +64,7 @@ fun main() {
                     .setMessageStrings(retainedMessages)
                     .loadPdbFromStream(stream)
                     .parse()
-            val numAtoms = mol.atoms.size
+            val numAtoms = mol.atomNumberList.size
             val numBonds = mol.bondList.size
             println("$file has $numAtoms atoms and $numBonds bonds")
             stream.close()
@@ -60,7 +77,7 @@ fun main() {
     println("Not There List: *********************")
     println(notThereList)
 
-    val outFile = File("../pdbs/0outfileMessages.txt")
+    val outFile = File("$RELATIVE_PATH/0outfileMessages.txt")
     val writer = outFile.bufferedWriter()
 
     writer.append("hello there")
