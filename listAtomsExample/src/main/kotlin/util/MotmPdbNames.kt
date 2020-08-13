@@ -20,13 +20,7 @@ package util
 
 class MotmPdbNames {
 
-    val pdbNamesShort = listOf(
-
-            "148l",
-            "1a0h",
-            "1a0i")
-
-    val pdbNamesOld = listOf(
+    val pdbNames = listOf(
 
             "148l",
             "1a0h",
@@ -996,11 +990,7 @@ class MotmPdbNames {
             "4yb9",
             "4ybq",
             "4zqk",
-            "4zwc"
-
-    )
-
-    val pdbNames = listOf(
+            "4zwc",
             "5a22",
             "5a9q",
             "5ara",

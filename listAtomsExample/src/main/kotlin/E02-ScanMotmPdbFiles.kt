@@ -22,8 +22,6 @@ import com.kotmol.pdbParser.ParserPdbFile
 import util.MotmPdbNames
 import java.io.*
 
-const val RELATIVE_PATH = "../pdbs"
-
 /**
  * This main() routine loops through a list of PDB files
  * and parses them with the kotmolpdbparser library.
@@ -43,10 +41,11 @@ const val RELATIVE_PATH = "../pdbs"
  *    defined in the util/MotmPdbNames.kt file.
  *
  */
+const val RELATIVE_PATH = "../pdbs"
 fun main() {
 
-//    val files = MotmPdbNames().pdbNames
-    val files = MotmPdbNames().pdbNamesShort
+    val files = MotmPdbNames().pdbNames
+    println("Info:  The current list of files has ${files.size} entries.")
 
     val notThereList = mutableListOf<String>()
     val retainedMessages = mutableListOf<String>()
