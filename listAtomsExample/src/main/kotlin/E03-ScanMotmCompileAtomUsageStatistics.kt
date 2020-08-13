@@ -16,14 +16,43 @@
  *
  */
 
-
 import com.kotmol.pdbParser.*
 import util.MotmPdbNames
 import java.io.*
 
+/**
+ * This main() routine (below after the class) loops through a list of PDB files
+ * and parses them with the kotmolpdbparser library.
+ * It accumulates statistics about atom usage for each PDB file.
+ *
+ * At the end of the loop it sorts the statistics and prints them out.
+ *
+ * SETUP:
+ *    See the script in $ROOT/docs/downloadPdbFiles
+ *    You will need to download the PDB files using the script
+ *    in the folder.  The RELATIVE_PATH (see above) gives the
+ *    path to where you put the files.
+ *
+ *    The various examples will cycle through the PDBs as based on the
+ *    MotmPdbNames().pdbNamesShort list
+ *    defined in the util/MotmPdbNames.kt file.
+ *
+ */
+const val E03_RELATIVE_PATH = "../pdbs"
+
+data class AtomCounts(var atomNumber: Int = 0, var abundance: Int = 0)
+
+const val numberOfKnownAtoms = 118
+val atomCountsArray = mutableListOf(AtomCounts())
+
 class PdbAtomStatistics {
 
-    val CharCountArray  = Array(118){0}
+    init {
+        for (i in 0..numberOfKnownAtoms) {
+            atomCountsArray.add(AtomCounts(i, 0))
+        }
+    }
+
     val atomInfo = AtomInformationTable()
     val eleHash = atomInfo.atomSymboltoAtomNumNameColor
 
@@ -46,7 +75,7 @@ class PdbAtomStatistics {
                     || atomNumber > 118) {
                 println("oopsie $atomNumber is OUT OF RANGE **************************")
             }
-            CharCountArray[atomNumber]++
+            atomCountsArray[atomNumber].abundance++
         }
     }
 }
@@ -59,17 +88,18 @@ class PdbAtomStatistics {
  * usage of all ATOM and HETATM types.
  */
 fun main() {
-
-    val stats = PdbAtomStatistics()
-
+//    val files = MotmPdbNames().pdbNamesTEST
     val files = MotmPdbNames().pdbNames
 
     val notThereList = mutableListOf<String>()
     val retainedMessages = mutableListOf<String>()
 
+    val stats = PdbAtomStatistics()  // this will accumulate the counts
+
     for (file in files) {
 
-        val thisPdbFile = File("../pdbs/$file.pdb")
+        val filePath = "$E03_RELATIVE_PATH/$file.pdb"
+        val thisPdbFile = File(filePath)
         val fileExists = thisPdbFile.exists()
         if (fileExists) {
             retainedMessages.add(String.format("****** file: %s", file))
@@ -85,12 +115,12 @@ fun main() {
             println("$file has $numAtoms atoms and $numBonds bonds")
 
             /*
-         * now scan the molecule() and compile stats in the number of
-         * Atom() types
-         *
-         */
+             * The PDB file is now parsed into the mol structure.
+             * now scan the mol and compile stats in the number of
+             * Atom() types
+             */
             val atomList = mutableListOf<PdbAtom>()
-            val atomHash = mol.atomNumberToAtomInfoHash
+            // val atomHash = mol.atomNumberToAtomInfoHash
             val atoms = mol.atomNumberList
             for (atomNumber in atoms) {
                 atomList.add(mol.atomNumberToAtomInfoHash[atomNumber]!!)
@@ -103,32 +133,35 @@ fun main() {
         }
     }
 
-    println("Not There List: *********************")
-    println(notThereList)
-
-    val outFile = File("../pdbs/0outfileMessages.txt")
-    val writer = outFile.bufferedWriter()
-
-    writer.append("hello there")
-    writer.append("more text\n")
-    for (item in retainedMessages) {
-        writer.append(item)
-        writer.append("\n")
-
+    if (notThereList.isEmpty()) {
+        println("*************************")
+        println("No missing PDBs were found from the list of ${files.size} PDB files")
+        println("*************************")
+    } else {
+        println("*************************")
+        println("The following PDBs were NOT found from the list of ${files.size} PDB files")
+        println(notThereList)
+        println("*************************")
     }
-    writer.close()
 
-    val theFinalCount = stats.CharCountArray
     val atomInfo = AtomInformationTable()
     val atomArray = atomInfo.atomInformationTable
     /*
      * Note that Hydrogen has an element number of 1- so the table is "one-based"
      * but the array is "zero-based".   Element "0" has zero counts.
      */
-    for (i in 1..theFinalCount.size-1) {
-        val elementName = atomArray[i-1].name
-        println("$elementName,${theFinalCount[i]}")
+//    for (i in 1 until numberOfKnownAtoms) {
+//        val elementName = atomArray[i-1].name
+//        println("$elementName,${atomCountsArray[i].abundance}")
+//    }
+
+    val sortedList = atomCountsArray.sortedByDescending { it.abundance }
+
+    for (i in 0 until numberOfKnownAtoms-1) {
+        val elementName = atomArray[sortedList[i].atomNumber].name
+        println("$elementName,${sortedList[i].abundance}")
     }
+
     println("done")
 }
 

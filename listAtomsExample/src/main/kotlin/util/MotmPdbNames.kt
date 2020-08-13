@@ -20,6 +20,38 @@ package util
 
 class MotmPdbNames {
 
+    val pdbNamesTEST = listOf(
+            "1bgw",
+            "1bkd",
+            "1bkv",
+            "1blb",
+            "1bln",
+            "1bo4",
+            "1boy",
+            "1bpo",
+            "1br0",
+            "1br1",
+            "1brl",
+            "1buw",
+            "1bx6",
+            "1bzy",
+            "1c1e",
+            "1c3w",
+            "1c4e",
+            "1c7d",
+            "1c8m",
+            "1c96",
+            "1c9f",
+            "1cag",
+            "1cam",
+            "1cdw",
+            "1cet",
+            "1cfd",
+            "1cfj",
+            "1cjb",
+            "1cjw"
+    )
+
     val pdbNames = listOf(
 
             "148l",

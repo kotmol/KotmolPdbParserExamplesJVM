@@ -41,7 +41,7 @@ import java.io.*
  *    defined in the util/MotmPdbNames.kt file.
  *
  */
-const val RELATIVE_PATH = "../pdbs"
+const val E02_RELATIVE_PATH = "../pdbs"
 fun main() {
 
     val files = MotmPdbNames().pdbNames
@@ -52,7 +52,7 @@ fun main() {
 
     for (file in files) {
 
-        val thisPdbFile = File("$RELATIVE_PATH/$file.pdb")
+        val thisPdbFile = File("$E02_RELATIVE_PATH/$file.pdb")
         val fileExists = thisPdbFile.exists()
         if (fileExists) {
             retainedMessages.add(String.format("****** file: %s", file))
@@ -84,7 +84,7 @@ fun main() {
         println("*************************")
     }
 
-    val outputMessagesFilePath = "$RELATIVE_PATH/0outfileMessages.txt"
+    val outputMessagesFilePath = "$E02_RELATIVE_PATH/0outfileMessages.txt"
     println("Writing parser messages to $outputMessagesFilePath")
     val outFile = File("$outputMessagesFilePath")
     val writer = outFile.bufferedWriter()
