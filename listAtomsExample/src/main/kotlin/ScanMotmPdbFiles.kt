@@ -53,7 +53,7 @@ fun main() {
 
     for (file in files) {
 
-        val thisPdbFile = File("../pdbs/$file.pdb")
+        val thisPdbFile = File("$RELATIVE_PATH/$file.pdb")
         val fileExists = thisPdbFile.exists()
         if (fileExists) {
             retainedMessages.add(String.format("****** file: %s", file))
@@ -69,23 +69,31 @@ fun main() {
             println("$file has $numAtoms atoms and $numBonds bonds")
             stream.close()
         } else {
-            println("UFFDA $thisPdbFile does not exist")
+            println("Error: $thisPdbFile does not exist")
             notThereList.add(file)
         }
     }
 
-    println("Not There List: *********************")
-    println(notThereList)
+    if (notThereList.isEmpty()) {
+        println("*************************")
+        println("No missing PDBs were found from the list of ${files.size} PDB files")
+        println("*************************")
+    } else {
+        println("*************************")
+        println("The following PDBs were NOT found from the list of ${files.size} PDB files")
+        println(notThereList)
+        println("*************************")
+    }
 
-    val outFile = File("$RELATIVE_PATH/0outfileMessages.txt")
+    val outputMessagesFilePath = "$RELATIVE_PATH/0outfileMessages.txt"
+    println("Writing parser messages to $outputMessagesFilePath")
+    val outFile = File("$outputMessagesFilePath")
     val writer = outFile.bufferedWriter()
 
-    writer.append("hello there")
-    writer.append("more text\n")
+    writer.append("Messages from the PDB parser:\n")
     for (item in retainedMessages) {
         writer.append(item)
         writer.append("\n")
-
     }
     writer.close()
 
