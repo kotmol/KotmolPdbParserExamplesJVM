@@ -17,7 +17,9 @@ If you want to scan all 981 entries, then you must first
 download them into an external folder.   A script is 
 provided to do this in the `docs/downloadPdbFiles` folder.
 The script calls the [wget][2] program to do the downloading
-from the [rcsb.org][3] web page.
+from the [rcsb.org][3] web page.<br>
+Updated to write out a list of the number of atoms in the 
+PDBs in sorted order - biggest first.
 
 ### Running in the Android Studio IDE
 

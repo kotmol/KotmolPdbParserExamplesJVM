@@ -40,10 +40,12 @@ const val E02_RELATIVE_PATH = "../pdbs"
 fun main() {
 
     val files = MotmPdbNames().pdbNames
+//    val files = MotmPdbNames().pdbNamesTEST
     println("Info:  The current list of files has ${files.size} entries.")
 
     val notThereList = mutableListOf<String>()
     val retainedMessages = mutableListOf<String>()
+    val numAtomsList = mutableListOf<Pair<String, Int>>()
 
     for (file in files) {
 
@@ -62,6 +64,9 @@ fun main() {
             val numBonds = mol.bondList.size
             println("$file has $numAtoms atoms and $numBonds bonds")
             stream.close()
+
+            val entry = Pair(file, numAtoms)
+            numAtomsList.add(entry)
         } else {
             println("Error: $thisPdbFile does not exist")
             notThereList.add(file)
@@ -89,6 +94,15 @@ fun main() {
         writer.append(item)
         writer.append("\n")
     }
+
+    val result = numAtomsList.sortedWith(compareBy({ it.second }, { it.first })).asReversed()
+
+    writer.append("Messages from the PDB parser:\n")
+    for (item in result) {
+        writer.append("${item.second}  ${item.first}" )
+        writer.append("\n")
+    }
+
     writer.close()
 
     println("done")

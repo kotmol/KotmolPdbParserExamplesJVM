@@ -12,6 +12,8 @@
  */
 
 import com.kotmol.pdbParser.*
+import com.kotmol.pdbParser.AtomInformationTable.atomSymboltoAtomNumNameColor
+import com.kotmol.pdbParser.AtomInformationTable.atomTable
 import util.MotmPdbNames
 import java.io.*
 
@@ -48,8 +50,7 @@ class PdbAtomStatistics {
         }
     }
 
-    val atomInfo = AtomInformationTable()
-    val eleHash = atomInfo.atomSymboltoAtomNumNameColor
+    val eleHash = atomSymboltoAtomNumNameColor
 
     fun atomsByType(atomList: MutableList<PdbAtom>) {
         for (atom in atomList) {
@@ -139,8 +140,7 @@ fun main() {
         println("*************************")
     }
 
-    val atomInfo = AtomInformationTable()
-    val atomArray = atomInfo.atomInformationTable
+    val atomArray = atomTable
     /*
      * Note that Hydrogen has an element number of 1- so the table is "one-based"
      * but the array is "zero-based".   Element "0" has zero counts.
